@@ -8,13 +8,21 @@ from .models import Post
 from django.views.generic import ListView
 from .models import Post
 
-def post_detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    return render(request, 'dojo/post_detail.html', {
-        'post': post
-    })
 
-    return render
+def generate_view_fn(model):  # 모델클래스를 받는다
+    def view_fn(request, id):
+        instance = get_object_or_404(model, id=id)
+        instance_name = model._meta.model_name
+        template_name = '{}/{}_detail.html'.format(model._meta.app_label, instance_name)
+
+        return render(request, template_name, {
+            instance_name: instance,
+        })
+
+    return view_fn
+
+post_detail = generate_view_fn(Post)
+
 
 def mysum(request, numbers):
     result = sum(map(int, numbers.split("/")))  #map은 리스트의 요소를 지정된 함수로 처리해주는 함수입니
