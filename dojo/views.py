@@ -7,34 +7,13 @@ from .forms import PostForm
 from .models import Post
 from django.views.generic import ListView
 from .models import Post
+from django.views.generic import DetailView, ListView
 
 
-class DetailView(object):
+post_detail = DetailView.as_view(model=Post)
 
-    def __init__(self, model):
-        self.model = model
+post_list = ListView.as_view(model=Post, paginate_by=3)
 
-    def get_object(self, *args, **kwargs):
-        return get_object_or_404(self.model, id=kwargs['id'])
-
-    def get_template_name(self):
-        return '{}/{}_detail.html'.format(self.model._meta.app_label, self.model._meta.model_name)
-
-    def dispatch(self, request, *args, **kwargs):
-        return render(request, self.get_template_name(), {
-            self.model._meta.model_name: self.get_object(*args, **kwargs),
-        })
-
-    @classmethod
-    def as_view(cls, model):  # cls는 클래스로 이클래스를 호출
-        def view(request, *args, **kwargs):
-            self = cls(model)  # 해당 위에 클래스의 인스턴스생성.
-
-            return self.dispatch(request, *args, **kwargs)  # 추가인자받은것을 그대로 다시 넘겨줌
-        return view
-
-
-post_detail = DetailView.as_view(Post)
 
 def mysum(request, numbers):
     result = sum(map(int, numbers.split("/")))  #map은 리스트의 요소를 지정된 함수로 처리해주는 함수입니
@@ -49,21 +28,6 @@ def name(request, name, age):
 
 # Create your views here.
 
-def post_list1(request):
-    name = "공유"
- 
-
-def post_list2(request):
-    name = "공유"
-    return render(request, 'dojo/post_list.html', {'name':name})
-
-
-def post_list3(request):
-    return JsonResponse({
-        'message': '안녕 파이썬&장고',
-        'items': ['파이썬', '장고', 'Celery', 'AZURE']
-    }, json_dumps_params={'ensure_ascii': False
-    })
 
 def excel_download(request):
     filepath = "/Users/spicyhoro/nomade/django/cat.xls"
