@@ -9,20 +9,32 @@ from django.views.generic import ListView
 from .models import Post
 
 
-def generate_view_fn(model):  # 모델클래스를 받는다
-    def view_fn(request, id):
-        instance = get_object_or_404(model, id=id)
-        instance_name = model._meta.model_name
-        template_name = '{}/{}_detail.html'.format(model._meta.app_label, instance_name)
+class DetailView(object):
 
-        return render(request, template_name, {
-            instance_name: instance,
+    def __init__(self, model):
+        self.model = model
+
+    def get_object(self, *args, **kwargs):
+        return get_object_or_404(self.model, id=kwargs['id'])
+
+    def get_template_name(self):
+        return '{}/{}_detail.html'.format(self.model._meta.app_label, self.model._meta.model_name)
+
+    def dispatch(self, request, *args, **kwargs):
+        return render(request, self.get_template_name(), {
+            self.model._meta.model_name: self.get_object(*args, **kwargs),
         })
 
-    return view_fn
+    @classmethod
+    def as_view(cls, model):  # cls는 클래스로 이클래스를 호출
+        def view(request, *args, **kwargs):
+            self = cls(model)  # 해당 위에 클래스의 인스턴스생성.
 
-post_detail = generate_view_fn(Post)
+            return self.dispatch(request, *args, **kwargs)  # 추가인자받은것을 그대로 다시 넘겨줌
+        return view
 
+
+post_detail = DetailView.as_view(Post)
 
 def mysum(request, numbers):
     result = sum(map(int, numbers.split("/")))  #map은 리스트의 요소를 지정된 함수로 처리해주는 함수입니

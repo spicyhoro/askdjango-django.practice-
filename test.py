@@ -1,4 +1,4 @@
-
+print('fuck')
 
 def count(text):
     for i in range(100):
