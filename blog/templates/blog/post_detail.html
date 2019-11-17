@@ -1,0 +1,55 @@
+{% extends "blog/layout.html" %}
+{%  load imagekit %}
+
+<!doctype html>
+<html>
+    <head>
+        
+        <meta charset="utf-8" />
+        {% block title %}
+        {{post.title}} 
+        {% endblock %}
+
+    </head>
+
+    
+{% block content %}
+<body>
+    <h1>{{post.title}}</h1>
+
+    {% if post.photo %}
+      <img src="{{ post.photo.url }}" style="max-width: 100%;" />
+
+        {% thumbnail "100x100" post.photo as thumb %}
+        <img src="{{  thumb.url }}" width="thumb.width" height="{{  thumb.height }}"
+
+    {% endif %}
+
+
+
+
+    {{post.content|linebreaksbr}}
+
+    <hr/>
+
+    <h3>Comments
+    </h3>
+    <ul>
+    {% for comment in post.comment_set.all%}
+       
+    <li>    
+        {{comment.message}}
+       <small>by{{comment.author}}</small>
+       <small>at{{comment.updated_at}}</small>
+    </li>
+
+    {%endfor%}
+    </ul>
+
+    <hr/>
+    <a href="{% url "blog:post_list" %}"> 글 목록</a>
+    <a href="{% url "blog:post_edit" post.id %}">글 수정</a>
+
+{% endblock %}
+
+</html>

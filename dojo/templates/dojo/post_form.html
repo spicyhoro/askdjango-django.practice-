@@ -1,0 +1,61 @@
+
+{% load bootstrap3 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript  %}
+
+<table class="table table-bordered table-hover">
+
+<caption
+>Post List</caption
+>
+
+<thead
+>
+
+<tr
+>
+
+<th
+>title</th
+>
+
+<th
+>created at</th
+>
+ </tr
+>
+ </thead
+>
+
+<tbody
+>
+ {% for post in post_list %}
+
+<tr
+>
+
+<td
+>{{ post.title }}</td
+>
+
+<td
+>{{ post.updated_at }}</td
+>
+ </tr
+>
+ {% endfor %}
+ </tbody
+>
+</table
+>
+<div class="text-center">
+ {% bootstrap_pagination page_obj %}
+</div
+>
+
+
+<script>
+var dom = document.getElementById('id_user_agent');
+dom.value = navigator.userAgent;
+</script>
