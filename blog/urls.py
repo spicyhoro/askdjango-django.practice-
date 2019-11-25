@@ -11,6 +11,7 @@ urlpatterns = [
     path('<int:pk>', views_cbv.post_detail, name='post_detail'),
     path('new/', views_cbv.post_new, name='post_new'),
     path('<int:pk>/edit/', views_cbv.post_edit, name='post_edit'),
+path('<int:pk>/delete/', views_cbv.post_delete, name='post_delete'),
 ]
 #정규표현식 문자열 시작 ^ 끝 $
 #함수를 인자로 넘겨줌 (호출x ()없으므로)
