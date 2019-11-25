@@ -1,14 +1,14 @@
 # blog/urls.py
 from django.conf.urls import url
 from django.urls import include, path
-from . import views
+from . import views, views_cbv
 
 
 
 app_name = 'blog'
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
-    path('<int:id>', views.post_detail, name='post_detail'),
+    path('', views_cbv.post_list, name='post_list'),
+    path('<int:pk>', views_cbv.post_detail, name='post_detail'),
     path('new/', views.post_new, name='post_new'),
     path('<int:id>/edit/', views.post_edit, name='post_edit'),
 ]
