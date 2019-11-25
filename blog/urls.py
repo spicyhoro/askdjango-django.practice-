@@ -9,8 +9,8 @@ app_name = 'blog'
 urlpatterns = [
     path('', views_cbv.post_list, name='post_list'),
     path('<int:pk>', views_cbv.post_detail, name='post_detail'),
-    path('new/', views.post_new, name='post_new'),
-    path('<int:id>/edit/', views.post_edit, name='post_edit'),
+    path('new/', views_cbv.post_new, name='post_new'),
+    path('<int:pk>/edit/', views_cbv.post_edit, name='post_edit'),
 ]
 #정규표현식 문자열 시작 ^ 끝 $
 #함수를 인자로 넘겨줌 (호출x ()없으므로)

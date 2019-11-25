@@ -48,7 +48,7 @@ class Post(models.Model):
         ordering = ['-id'] #이 필드에 대해서 내림차순 정렬
     
     def get_absolute_url(self):
-        return reverse('blog:post_detail', args=[ self.id ])
+        return reverse('blog:post_detail', args=[ self.id ]) #reverse는 주소 문자열리턴해줌
 
 
     
