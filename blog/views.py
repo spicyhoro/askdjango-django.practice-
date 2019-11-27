@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Post
+from .models import Post, Comment
 from .forms import PostForm
 from django.contrib import messages
 
@@ -70,4 +70,11 @@ def post_edit(request, id):
         pass
     return render(request, 'blog/post_form.html',{
         'form':form,
+    })
+
+
+def comment_list(request):
+    comment_list = Comment.objects.all()
+    return render(request, 'blog/comment_list.html', {
+        'comment_list': comment_list,
     })
