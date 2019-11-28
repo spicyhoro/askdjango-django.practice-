@@ -10,7 +10,7 @@ from django.contrib import messages
 # Create your views here.
 def post_list(request):
 
-    qs = Post.objects.all()
+    qs = Post.objects.all().prefetch_related('comment_set', 'tag_set')
 
     q = request.GET.get('q', '') #검색이라는 요청에 템플릿에서 나오는 q인자  있다면 q가져오고 없다면 ''으로가져와 객체 q로함리퀘스트 겟인자에 겟에 q가 있
     if q: #q가 True이면 
@@ -76,5 +76,5 @@ def post_edit(request, id):
 def comment_list(request):
     comment_list = Comment.objects.all().select_related('post')
     return render(request, 'blog/comment_list.html', {
-        'comment_list': comment_list,
+        'comment_list': comment_list
     })
