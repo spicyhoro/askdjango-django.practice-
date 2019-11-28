@@ -7,11 +7,11 @@ from . import views, views_cbv
 
 app_name = 'blog'
 urlpatterns = [
-    path('', views_cbv.post_list, name='post_list'),
+    path('', views.post_list, name='post_list'),
     path('<int:pk>', views_cbv.post_detail, name='post_detail'),
     path('new/', views_cbv.post_new, name='post_new'),
     path('<int:pk>/edit/', views_cbv.post_edit, name='post_edit'),
-path('<int:pk>/delete/', views_cbv.post_delete, name='post_delete'),
+    path('<int:pk>/delete/', views_cbv.post_delete, name='post_delete'),
     path('comments/', views.comment_list, name='comment_list'),
 ]
 #정규표현식 문자열 시작 ^ 끝 $
