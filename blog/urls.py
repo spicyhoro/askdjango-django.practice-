@@ -7,7 +7,7 @@ from . import views, views_cbv
 
 app_name = 'blog'
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
+    path('', views_cbv.post_list, name='post_list'),
     path('<int:pk>', views_cbv.post_detail, name='post_detail'),
     path('new/', views_cbv.post_new, name='post_new'),
     path('<int:pk>/edit/', views_cbv.post_edit, name='post_edit'),
