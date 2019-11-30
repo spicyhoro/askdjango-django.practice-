@@ -6,8 +6,15 @@ from django.utils.safestring import mark_safe
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'status', 'content_size','created_at', 'updated_at']
+    list_display = ['id', 'title', 'tag_list', 'status', 'content_size','created_at', 'updated_at']
     actions = ['make_draft','make_published']
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.prefetch_related('tag_set')
+
+    def tag_list(self, post):
+        return ','.join(tag.name for tag in post.tag_set.all()) #리스트로 가져오는 문법
  
     def content_size(self, post):
         return mark_safe('<strong>{}글자</strong>'.format(len(post.content))) #post가 인스턴스 Post의... 

@@ -5,7 +5,8 @@ from .models import Post, Comment
 from .forms import PostForm
 from django.contrib import messages
 
-
+def trigger_error(request):
+    division_by_zero = 1 / 0
 
 # Create your views here.
 def post_list(request):

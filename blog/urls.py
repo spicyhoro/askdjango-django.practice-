@@ -2,6 +2,7 @@
 from django.conf.urls import url
 from django.urls import include, path
 from . import views, views_cbv
+from .views import trigger_error
 
 
 
@@ -13,6 +14,7 @@ urlpatterns = [
     path('<int:pk>/edit/', views_cbv.post_edit, name='post_edit'),
     path('<int:pk>/delete/', views_cbv.post_delete, name='post_delete'),
     path('comments/', views.comment_list, name='comment_list'),
+    path('sentry-debug/', trigger_error),
 ]
 #정규표현식 문자열 시작 ^ 끝 $
 #함수를 인자로 넘겨줌 (호출x ()없으므로)
