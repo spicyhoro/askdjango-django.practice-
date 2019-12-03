@@ -1,12 +1,8 @@
-from django.shortcuts import render
 from django.http import Http404, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Post, Comment
 from .forms import PostForm
 from django.contrib import messages
-
-def trigger_error(request):
-    division_by_zero = 1 / 0
 
 # Create your views here.
 def post_list(request):
@@ -79,3 +75,9 @@ def comment_list(request):
     return render(request, 'blog/comment_list.html', {
         'comment_list': comment_list
     })
+
+
+
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
